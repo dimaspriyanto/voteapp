@@ -1,0 +1,21 @@
+%p
+  %b User:
+  = @vote.user.name
+%p
+  %b Title:
+  = @vote.title
+%p
+  %b Description:
+  = @vote.description
+
+%p
+  - if user_signed_in?
+    - arr = ['Knew that!', 'Didn\'t know that', 'Me too!', 'Awesome', 'Whoa', 'Weird', 'Boring', 'No Way']
+    - arr.each do |voting|
+      = link_to voting, voting_vote_path(@vote, :choice => voting) 
+    %ul
+      - arr.each do |voting|
+        %li= @vote.votings.select{|v| v.choice.eql?(voting) }.count.to_s + " " + voting
+
+= link_to 'Edit', edit_vote_path(@vote) if user_signed_in?
+= link_to 'Back', votes_path

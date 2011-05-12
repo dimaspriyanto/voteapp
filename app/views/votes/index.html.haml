@@ -1,0 +1,22 @@
+%h1 Listing votes
+
+%table
+  %tr
+    %th User
+    %th Title
+    %th Description
+    %th
+
+  - @votes.each do |vote|
+    %tr
+      %td= vote.user && vote.user.name
+      %td= vote.title
+      %td= vote.description
+      %td
+        - if current_user == vote.user or current_user.is_admin?
+          = link_to 'Show', vote
+          = link_to 'Edit', edit_vote_path(vote)
+          = link_to 'Destroy', vote, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
